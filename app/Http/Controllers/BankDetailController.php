@@ -8,9 +8,14 @@ use App\Http\Controllers\Controller;
 use App\BankDetail;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class BankDetailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +47,9 @@ class BankDetailController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         BankDetail::create($requestData);
 
         Session::flash('flash_message', 'BankDetail added!');
@@ -90,9 +95,9 @@ class BankDetailController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $bankdetail = BankDetail::findOrFail($id);
         $bankdetail->update($requestData);
 
