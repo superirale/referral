@@ -14,10 +14,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/admin/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-    -->
+
     <link rel="stylesheet" href="/admin/css/skins/skin-blue.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -146,31 +143,21 @@
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="/admin/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                  <img src="/admin/img/avatar.png" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class="hidden-xs">{{Auth::user()->name}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="/admin/img/avatar.png" class="img-circle" alt="User Image">
                     <p>
                       {{Auth::user()->name}}
-                      <small>{{date("d jS", strtotime(Auth::user()->created_at))}}</small>
+                      <small>{{date("jS M Y", strtotime(Auth::user()->created_at))}}</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>
+
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
@@ -188,14 +175,14 @@
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar">-
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
 
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/admin/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="/admin/img/avatar.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>{{Auth::user()->name}}</p>
@@ -249,9 +236,7 @@
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
 
-      </aside><!-- /.control-sidebar -->
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
+      </aside>
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
@@ -263,10 +248,5 @@
     <script src="/admin/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/admin/js/app.min.js"></script>
-
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-         Both of these plugins are recommended to enhance the
-         user experience. Slimscroll is required when using the
-         fixed layout. -->
   </body>
 </html>
