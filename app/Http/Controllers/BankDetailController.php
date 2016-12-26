@@ -56,7 +56,7 @@ class BankDetailController extends Controller
 
         Session::flash('flash_message', 'BankDetail added!');
 
-        return redirect("bank-detail".$requestData['user_id']."/edit");
+        return redirect("bank-detail/".$requestData['user_id']."/edit");
     }
 
     /**
@@ -87,7 +87,6 @@ class BankDetailController extends Controller
         if(!$bankdetail)
             return view('bank-detail.create');
 
-
         return view('bank-detail.edit', compact('bankdetail'));
     }
 
@@ -109,7 +108,7 @@ class BankDetailController extends Controller
 
         Session::flash('flash_message', 'BankDetail updated!');
 
-        return redirect('bank-detail');
+        return redirect("bank-detail/".Auth::user()->id."/edit");
     }
 
     /**

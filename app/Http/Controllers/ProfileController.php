@@ -12,6 +12,10 @@ use Auth;
 
 class ProfileController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -102,8 +106,10 @@ class ProfileController extends Controller
         $profile->update($requestData);
 
         Session::flash('flash_message', 'Profile updated!');
+        $user = Auth::user()->id;
 
-        return redirect('profile');
+        return redirect("profile/".Auth::user()->id."/edit");
+
     }
 
     /**

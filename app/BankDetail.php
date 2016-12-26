@@ -25,7 +25,7 @@ class BankDetail extends Model
      *
      * @var array
      */
-    protected $fillable = ['bank_id', 'account_name', 'account_number', 'account_type_id', 'bank_swift_code'];
+    protected $fillable = ['bank_id', 'account_name', 'account_number', 'account_type_id', 'bank_swift_code', 'user_id'];
 
-    
+
 }
