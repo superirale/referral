@@ -49,12 +49,14 @@ class BankDetailController extends Controller
     {
 
         $requestData = $request->all();
+        $requestData['user_id'] = Auth::user()->id;
+
 
         BankDetail::create($requestData);
 
         Session::flash('flash_message', 'BankDetail added!');
 
-        return redirect('bank-detail');
+        return redirect("bank-detail".$requestData['user_id']."/edit");
     }
 
     /**
@@ -80,7 +82,11 @@ class BankDetailController extends Controller
      */
     public function edit($id)
     {
-        $bankdetail = BankDetail::findOrFail($id);
+        $bankdetail = BankDetail::where('user_id', $id)->first();
+
+        if(!$bankdetail)
+            return view('bank-detail.create');
+
 
         return view('bank-detail.edit', compact('bankdetail'));
     }

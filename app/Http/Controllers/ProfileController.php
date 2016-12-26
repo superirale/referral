@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Profile;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -42,14 +43,15 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+        $requestData['user_id'] = Auth::user()->id;
+
         Profile::create($requestData);
 
         Session::flash('flash_message', 'Profile added!');
 
-        return redirect('profile');
+        return redirect("profile/".$requestData['user_id']."/edit");
     }
 
     /**
@@ -73,9 +75,12 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($user_id)
     {
-        $profile = Profile::findOrFail($id);
+        $profile = Profile::where('user_id', $user_id)->first();
+
+        if(!$profile)
+            return view('profile.create');
 
         return view('profile.edit', compact('profile'));
     }
@@ -90,9 +95,9 @@ class ProfileController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $profile = Profile::findOrFail($id);
         $profile->update($requestData);
 

@@ -23,6 +23,11 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+     <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
@@ -201,15 +206,15 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
+            <li class="header"><a href=".dashboard">Dashboard</a></li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
             <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-cog"></i> <span>Settings</span> <i class="fa fa-angle-right pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="#">Link in level 2</a></li>
-                <li><a href="#">Link in level 2</a></li>
+                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="/bank-detail/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Bank Details</a></li>
               </ul>
             </li>
           </ul><!-- /.sidebar-menu -->
