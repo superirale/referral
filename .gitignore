@@ -3,6 +3,7 @@
 /storage/*.key
 /vendor
 /.idea
+/app/P2P
 Homestead.json
 Homestead.yaml
 .env
