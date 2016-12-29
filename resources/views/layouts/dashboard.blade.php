@@ -212,9 +212,9 @@
             <li class="treeview">
               <a href="#"><i class="fa fa-money"></i> <span>Donation</span> <i class="fa fa-angle-right pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Recieved Donation</a></li>
-                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Sent Donation</a></li>
-                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-arrow-up"></i> Upgrade Level</a></li>
+                <li><a href="/received-donation"><i class="fa fa-money"></i> Recieved Donation</a></li>
+                <li><a href="/sent-donation"><i class="fa fa-money"></i> Sent Donation</a></li>
+                <li><a href="/upgrade"><i class="fa fa-arrow-up"></i> Upgrade Level</a></li>
 
               </ul>
             </li>

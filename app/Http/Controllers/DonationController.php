@@ -166,16 +166,23 @@ class DonationController extends Controller
 
     public function sent()
     {
-        $sent_donations = Donation::with(['level', 'receiver'=> function ($q)
+        $sent_donations = Donation::with(['level', 'sender', 'receiver'=> function ($q)
         {
-            $q->with(['bankAccount']);
-        }])->where('payer_user_id', Auth::user()->id)->get();
+            $q->with(['bankAccount' => function ($qq)
+            {
+                $qq->with('bank');
+            }]);
+        }
+        ])->where('payer_user_id', Auth::user()->id)->get();
 
         $current_user = User::with(['bankAccount' => function ($q)
         {
             $q->with('bank');
         }])->find(Auth::user()->id);
 
-        return view('donation.receive', compact('sent_donations', 'current_user'));
+        // dd($sent_donations);
+
+
+        return view('donation.sent', compact('sent_donations', 'current_user'));
     }
 }

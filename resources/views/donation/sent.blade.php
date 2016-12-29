@@ -30,8 +30,13 @@
                         <tr>
                           <td>{{$donation->level->name}}</td>
                           <td>
-                            <a href="/donation/approve/{{$donation->id}}" class="label label-success" onclick="confirm('are you sure you want to confirm this donation?');">approve</a>
-                            <a href="/donation/reject/{{$donation->id}}" class="label label-danger">reject</a>
+                            @if($donation->status == "")
+                              <span class="label label-warning">Pending</span>
+                            @elseif($donation->status == 'approved')
+                              <span class="label label-success">Approved</span>
+                            @else
+                              <span class="label label-danger">Rejected</span>
+                            @endif
                           </td>
                           <td>
                             <p>{{$donation->sender->name}}</p>
@@ -40,7 +45,9 @@
                           </td>
                           <td> <b>NGN</b> {{number_format($donation->amount)}}</td>
                           <td>
-                              <p><b>Bank</b>: {{$current_user->bankAccount->bank->name}} ({{$current_user->bankAccount->account_number}} - {{$current_user->bankAccount->account_name}})</p>
+
+                              <p><b>Bank</b>: {{$donation->receiver->bankAccount->bank->name}} ({{$donation->receiver->bankAccount->account_number}} - {{$donation->receiver->bankAccount->account_name}})</p>
+
                               <p><b>Submitted</b>: {{date('Y-m-d H:i:s', strtotime($donation->created_at))}}</p>
                               <p><b>Details</b>: {{$donation->payment_details}}</p>
                               <a href="">View Slip</a>
