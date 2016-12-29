@@ -9,7 +9,9 @@ use App\Donation;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
+use App\User;
 use App\BankAccount;
+use App\Helpers\Uploader;
 
 class DonationController extends Controller
 {
@@ -58,32 +60,19 @@ class DonationController extends Controller
 
         $uploader = new Uploader();
 
-        if($request->hasFile("file")){
+        if($request->hasFile("payment_receipt")){
 
-            $main_dir = env("PRODUCT_IMAGES_DIR");
-            $upload_dir = $uploader->getUploadDir($product->id, $main_dir);
+            $main_dir = env("PAYMENT_RECEIPT_DIR");
+            $upload_dir = $uploader->getUploadDir($donation->id, $main_dir);
 
-            $extension = $request->file->extension();
-            $filename = uniqid().$product->id.'.'.$extension;
+            $extension = $request->payment_receipt->extension();
+            $filename = uniqid().$donation->id.'.'.$extension;
             $new_filename = $upload_dir.'/'. $filename;
 
-            $upload = $uploader->upload($request->file, $new_filename, '');
+            $upload = $uploader->upload($request->payment_receipt, $new_filename, '');
 
-            $product->images()->save(new ProductImage(['reference' => $filename]));
-        }
-        else{
-
-            $product_images = [];
-            $main_dir = env("PRODUCT_IMAGES_DIR");
-            $upload_dir = $uploader->getUploadDir($product->id, $main_dir);
-            $i = 0;
-            foreach ($product->images as $image) {
-                $product_images[$i]['reference'] = $upload_dir.'/'. $image->reference;
-                $product_images[$i]['size'] = filesize($upload_dir.'/'. $image->reference);
-                $product_images[$i]['name'] = explode(".", $image->reference)[0];
-                $i++;
-            }
-            return response()->json($product_images);
+            $donation->payment_receipt = $filename;
+            $donation->save();
         }
 
         Session::flash('flash_message', 'Donation added!');
@@ -158,5 +147,35 @@ class DonationController extends Controller
         Session::flash('flash_message', 'Donation deleted!');
 
         return redirect('donation');
+    }
+
+    public function recieved()
+    {
+        $received_donations = Donation::with(['level', 'sender'=> function ($q)
+        {
+            $q->with(['bankAccount']);
+        }])->where('payee_user_id', Auth::user()->id)->get();
+
+        $current_user = User::with(['bankAccount' => function ($q)
+        {
+            $q->with('bank');
+        }])->find(Auth::user()->id);
+
+        return view('donation.receive', compact('received_donations', 'current_user'));
+    }
+
+    public function sent()
+    {
+        $sent_donations = Donation::with(['level', 'receiver'=> function ($q)
+        {
+            $q->with(['bankAccount']);
+        }])->where('payer_user_id', Auth::user()->id)->get();
+
+        $current_user = User::with(['bankAccount' => function ($q)
+        {
+            $q->with('bank');
+        }])->find(Auth::user()->id);
+
+        return view('donation.receive', compact('sent_donations', 'current_user'));
     }
 }

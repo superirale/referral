@@ -24,3 +24,5 @@ Route::resource('bank-detail', 'BankDetailController');
 Route::get('change-password', 'profileController@changePassword');
 Route::post('change-password', 'profileController@changePassword');
 Route::resource('donation', 'DonationController');
+Route::get('received-donation', 'DonationController@recieved');
+Route::get('sent-donation', 'DonationController@sent');

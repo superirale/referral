@@ -27,5 +27,8 @@ class BankDetail extends Model
      */
     protected $fillable = ['bank_id', 'account_name', 'account_number', 'account_type_id', 'bank_swift_code', 'user_id'];
 
-
+    public function bank()
+    {
+        return $this->belongsTo('App\Bank');
+    }
 }

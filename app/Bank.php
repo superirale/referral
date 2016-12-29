@@ -11,7 +11,7 @@ class Bank extends Model
      *
      * @var string
      */
-    protected $table = 'Bank';
+    protected $table = 'banks';
 
     /**
     * The database primary key value.
@@ -27,5 +27,5 @@ class Bank extends Model
      */
     protected $fillable = ['name'];
 
-    
+
 }
