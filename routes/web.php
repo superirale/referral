@@ -21,3 +21,6 @@ Route::get('/dashboard', 'HomeController@index');
 
 Route::resource('profile', 'ProfileController');
 Route::resource('bank-detail', 'BankDetailController');
+Route::get('change-password', 'profileController@changePassword');
+Route::post('change-password', 'profileController@changePassword');
+Route::resource('donation', 'DonationController');

@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Profile;
+use App\User;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
@@ -126,5 +127,35 @@ class ProfileController extends Controller
         Session::flash('flash_message', 'Profile deleted!');
 
         return redirect('profile');
+    }
+
+    public function changePassword(Request $request)
+    {
+        if($request->isMethod('post')){
+
+            //check if the old password is correct
+            //and validate if the new password is the same with conf-password
+            //
+
+        if(Auth::attempt(['email' => Auth::user()->email, 'password' => $request->old_password])){
+            $this->validate($request, [
+                'old_password' => 'required',
+                'password' => 'required|min:8|confirmed',
+                'password_confirmation' => 'required|min:8'
+            ]);
+
+            $user = User::findOrFail(Auth::user()->id);
+            $new_password = bcrypt($request->password);
+            $user->update(['password' => $new_password]);
+
+            Session::flash('flash_message', 'Pasword Changed!');
+
+            }
+
+            Session::flash('flash_message', 'Pasword not changed!');
+
+        }
+
+        return view('profile.password');
     }
 }

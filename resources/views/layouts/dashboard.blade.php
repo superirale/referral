@@ -208,13 +208,22 @@
           <ul class="sidebar-menu">
             <li class="header"><a href=".dashboard">Dashboard</a></li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+            <li class="active"><a href="#"><i class="fa fa-users"></i> <span>Downline</span></a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-money"></i> <span>Donation</span> <i class="fa fa-angle-right pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Recieved Donation</a></li>
+                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Sent Donation</a></li>
+                <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-arrow-up"></i> Upgrade Level</a></li>
+
+              </ul>
+            </li>
             <li class="treeview">
               <a href="#"><i class="fa fa-cog"></i> <span>Settings</span> <i class="fa fa-angle-right pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="/profile/{{Auth::user()->id}}/edit"><i class="fa fa-user"></i> Profile</a></li>
                 <li><a href="/bank-detail/{{Auth::user()->id}}/edit"><i class="fa fa-money"></i> Bank Details</a></li>
+                <li><a href="/change-password"><i class="fa fa-lock"></i> Change Password</a></li>
               </ul>
             </li>
           </ul><!-- /.sidebar-menu -->
