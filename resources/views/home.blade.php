@@ -2,10 +2,14 @@
 
 @section('content')
 <div class="container">
-    <div class="alert alert-danger">
-        <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-        Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.
-    </div>
+     @if(Auth::user()->status == "unverified")
+        <div class="alert alert-danger">
+            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+           <b> Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</b>
+            <br>
+            <h1 id="count-down"></h1>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-4">
@@ -16,17 +20,17 @@
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Level</b> <a class="pull-right">1,322</a>
+                      <b>Level</b> <b class="pull-right">{{Auth::user()->userLevel->level->name}}</b>
                     </li>
                     <li class="list-group-item">
-                      <b>Total amount earned</b> <a class="pull-right">15403</a>
+                      <b>Total amount earned</b> <a class="pull-right">&#8358;{{number_format($total_received)}}</a>
                     </li>
                     <li class="list-group-item">
-                      <b>Total donation</b> <a class="pull-right">13,287</a>
+                      <b>Total donation</b> <a class="pull-right">&#8358;{{number_format($total_donated)}}</a>
                     </li>
                   </ul>
-                  <a href="#" class="btn btn-success btn-block"><b>Upgrade</b></a>
-                  <a href="#" class="btn btn-danger btn-block"><b>Account Setting</b></a>
+                  <a href="upgrade" class="btn btn-success btn-block"><b>Upgrade</b></a>
+                  <a href="profile/{{Auth::user()->id}}/edit" class="btn btn-danger btn-block"><b>Account Setting</b></a>
                 </div>
             </div>
         </div>
@@ -34,14 +38,14 @@
             <div class="box box-primary">
                 <div class="box-body box-profile">
 
-                  <h3 class="profile-username text-center">Your Level 1 Upline</h3>
+                  <h3 class="profile-username text-center">Your Level {{$next_level}} Upline</h3>
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Name</b> <a class="pull-right">Usman Irale</a>
+                      <b>Name</b> <b class="pull-right">{{$upline->name}}</b>
                     </li>
                     <li class="list-group-item">
-                      <b>Amount to pay</b> <a class="pull-right">543</a>
+                      <b>Amount to pay</b> <b class="pull-right">&#8358;{{number_format($next_level_amt)}}</b>
                     </li>
 
                   </ul>
@@ -49,14 +53,14 @@
             </div>
             <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>4</h3>
+                  <h3>@if(isset(Auth::user()->downlines)){{Auth::user()->downlines->count()}}@endif</h3>
                   <p>My Downline</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                  Downline Chart <i class="fa fa-arrow-circle-right"></i>
+                  Downline Chart <i class="fa fa-pie-chart"></i>
                 </a>
               </div>
         </div>

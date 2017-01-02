@@ -64,4 +64,22 @@ class Assign{
          return $this->getSuperAdmin();
       }
 
+      public function amountToPay($user_level)
+      {
+         switch ($user_level) {
+            case '1':
+               return env('LEVEL_ONE');
+               break;
+            case '2':
+               return env('LEVEL_TWO');
+               break;
+            case '3':
+               return env('LEVEL_THREE');
+               break;
+
+            default:
+               return "Error";
+               break;
+         }
+      }
 }

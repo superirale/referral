@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
+use App\User;
+use App\Donation;
+use P2P\Assign;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $p2p = new Assign();
+        $total_received = Donation::where('payee_user_id', Auth::user()->id)
+                                        ->where('status', 'approved')
+                                        ->sum('amount');
+        $total_donated = Donation::where('payer_user_id', Auth::user()->id)
+                                        ->where('status', 'approved')
+                                        ->sum('amount');
+        $next_level = Auth::user()->userLevel->level->level_no + 1;
+        $next_level_amt = $p2p->amountToPay($next_level);
+        $upline = $p2p->getUpline(Auth::user()->id, 1, $next_level);
+
+        return view('home', compact('total_donated', 'total_received', 'next_level', 'next_level_amt', 'upline'));
     }
 }

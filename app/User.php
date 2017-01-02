@@ -36,4 +36,14 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Profile');
     }
+
+    public function userLevel()
+    {
+        return $this->hasOne('App\UserLevel');
+    }
+
+    public function downlines()
+    {
+        return $this->hasMany('App\UserDownline');
+    }
 }

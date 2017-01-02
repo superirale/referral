@@ -10,4 +10,8 @@ class UserLevel extends Model
 
     protected $guarded = ['id'];
 
+    public function level()
+    {
+    	return $this->belongsTo('App\Level');
+    }
 }

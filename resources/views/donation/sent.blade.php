@@ -26,7 +26,6 @@
                     </tr>
                     @if(isset($sent_donations))
                       @foreach($sent_donations as $donation)
-
                         <tr>
                           <td>{{$donation->level->name}}</td>
                           <td>
@@ -45,7 +44,6 @@
                           </td>
                           <td> <b>NGN</b> {{number_format($donation->amount)}}</td>
                           <td>
-
                               <p><b>Bank</b>: {{$donation->receiver->bankAccount->bank->name}} ({{$donation->receiver->bankAccount->account_number}} - {{$donation->receiver->bankAccount->account_name}})</p>
 
                               <p><b>Submitted</b>: {{date('Y-m-d H:i:s', strtotime($donation->created_at))}}</p>

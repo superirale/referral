@@ -53,7 +53,7 @@ class AssignDownline
 
         UserLevel::create([
             'user_id' => $event->data->id,
-            'user_level' => 1
+            'level_id' => 1
         ]);
 
     }
