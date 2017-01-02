@@ -12,6 +12,7 @@ use Auth;
 use App\User;
 use App\BankAccount;
 use App\Helpers\Uploader;
+use P2P\Assign;
 
 class DonationController extends Controller
 {
@@ -22,6 +23,8 @@ class DonationController extends Controller
      */
     public function index()
     {
+        $assign = new Assign();
+
         $donation = Donation::paginate(25);
 
         return view('donation.index', compact('donation'));
