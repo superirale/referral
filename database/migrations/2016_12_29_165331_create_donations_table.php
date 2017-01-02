@@ -17,7 +17,7 @@ class CreateDonationsTable extends Migration
             $table->string('donated_to');
             $table->double('amount');
             $table->integer('payee_user_id');
-            $table->integer('level_id');
+            $table->integer('user_level_id');
             $table->text('payment_details');
             $table->string('payment_receipt');
             $table->timestamps();

@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
 use App\UserDownline;
+use App\UserLevel;
 use DB;
 
 class AssignDownline
@@ -32,22 +33,28 @@ class AssignDownline
                     ->first();
 
         if(!isset($user->id)){
-            $user = DB::select("select * from users u  inner
-                                join user_downlines ud ON u.id = ud.user_id
-                                where ud.user_id is not null and
-                                ud.level = 1
-                                group by ud.id
-                                having count(ud.id) < 5
-                                order by count(ud.id), u.created_at asc Limit 1");
+            $user = DB::select("select u.*, count(u.id) as countx from users u
+                                inner join user_downlines ud ON u.id = ud.user_id
+                                where ud.user_id is not null
+                                and ud.stage = 1
+                                group by u.id
+                                having countx < 5
+                                order by count(ud.id), u.created_at asc
+                                LIMIT 1");
             $user = $user[0];
         }
 
         //give new user a topline
         UserDownline::create([
-                'user_id' => $user->id,
-                'downline_user_id' => $event->data->id,
-                'level' => 1,
-            ]);
+            'user_id' => $user->id,
+            'downline_user_id' => $event->data->id,
+            'stage' => 1,
+        ]);
+
+        UserLevel::create([
+            'user_id' => $event->data->id,
+            'user_level' => 1
+        ]);
 
     }
     /**

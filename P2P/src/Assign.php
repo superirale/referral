@@ -43,7 +43,7 @@ class Assign{
           if(isset($upline->id)){
             if($step > 1 && $step == 2){
                   $sec_upl_id = UserDownline::where('downline_user_id', $upline->id)
-                                          ->where('stage', 1)
+                                          ->where('stage', $stage)
                                           ->first();
 
                $upline = User::find($sec_upl_id->user_id);
@@ -51,7 +51,7 @@ class Assign{
 
             if($step > 1 && $step == 3){
                   $third_upl_id = UserDownline::where('downline_user_id', $sec_upl_id->id)
-                                          ->where('stage', 1)
+                                          ->where('stage', $stage)
                                           ->first();
 
                $upline = User::find($third_upl_id->user_id);
@@ -60,6 +60,7 @@ class Assign{
 
           if(isset($upline->id))
             return $this->isSuperAdmin($upline);
+
          return $this->getSuperAdmin();
       }
 

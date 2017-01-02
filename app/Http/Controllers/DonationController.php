@@ -23,8 +23,8 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $assign = new Assign();
-
+        // $assign = new Assign();
+        // dd($assign->getUpline(Auth::user()->id, 1, 2));
         $donation = Donation::paginate(25);
 
         return view('donation.index', compact('donation'));
@@ -34,7 +34,7 @@ class DonationController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\View\View
-     */
+    */
     public function create()
     {
         return view('donation.create');
@@ -55,8 +55,9 @@ class DonationController extends Controller
 			'payment_details' => 'required',
             'payee_user_id' => 'required'
 		]);
-
         $requestData = $request->all();
+        // dd($requestData);
+
         $requestData['payer_user_id'] = Auth::user()->id;
 
         $donation = Donation::create($requestData);
@@ -183,9 +184,26 @@ class DonationController extends Controller
             $q->with('bank');
         }])->find(Auth::user()->id);
 
-        // dd($sent_donations);
-
-
         return view('donation.sent', compact('sent_donations', 'current_user'));
+    }
+
+    public function accept($donation_id)
+    {
+        $donation = Donation::find($donation_id);
+        $donation->update('status', 'approved');
+
+        Session::flash('flash_message', 'Donation approved!');
+
+        return redirect()->back();
+    }
+
+    public function reject($donation_id)
+    {
+        $donation = Donation::find($donation_id);
+        $donation->update('status', 'rejected');
+
+        Session::flash('flash_message', 'Donation rejected!');
+
+        return redirect()->back();
     }
 }

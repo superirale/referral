@@ -206,7 +206,7 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header"><a href=".dashboard">Dashboard</a></li>
+            <li class="header"><a href="dashboard">Dashboard</a></li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-users"></i> <span>Downline</span></a></li>
             <li class="treeview">
