@@ -16,17 +16,20 @@
                 <div class="box box-success">
                     <div class="box-body box-profile">
                       <img class="profile-user-img img-responsive img-circle" src="admin/img/avatar.png" alt="User profile picture">
-                      <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
+                      <h3 class="profile-username text-center">{{$upline->name}}</h3>
 
                       <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                          <b>Bank Name</b> <a class="pull-right">1,322</a>
+                          <b>Bank Name</b> <b class="pull-right">{{$upline->bankAccount->bank->name}}</b>
                         </li>
                         <li class="list-group-item">
-                          <b>Bank Account Name </b> <a class="pull-right">15403</a>
+                          <b>Bank Account Name </b> <b class="pull-right">{{$upline->bankAccount->account_name}}</b>
                         </li>
                         <li class="list-group-item">
-                          <b>Amount</b> <a class="pull-right">13,287</a>
+                          <b>Bank Account Number</b> <b class="pull-right">{{$upline->bankAccount->account_number}}</b>
+                        </li>
+                        <li class="list-group-item">
+                          <b>Amount</b> <b class="pull-right">&#8358;{{number_format($next_level_amt)}}</b>
                         </li>
                       </ul>
                     </div>

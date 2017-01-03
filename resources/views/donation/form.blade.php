@@ -12,8 +12,8 @@
     </div>
 </div>
 
-<input type="hidden" name="payee_user_id" value="1">
-<input type="hidden" name="user_level_id" value="2">
+<input type="hidden" name="payee_user_id" value="{{$upline->id}}">
+<input type="hidden" name="user_level_id" value="{{$next_user_level->id}}">
 <div class="form-group {{ $errors->has('payment_details') ? 'has-error' : ''}}">
     {!! Form::label('payment_details', 'Payment Details', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">

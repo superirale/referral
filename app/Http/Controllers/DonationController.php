@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 use App\User;
+use App\Level;
 use App\BankAccount;
 use App\Helpers\Uploader;
 use P2P\Assign;
@@ -37,7 +38,14 @@ class DonationController extends Controller
     */
     public function create()
     {
-        return view('donation.create');
+        // dd(Auth::user()->userLevel->level->level_no);
+        $p2p = new Assign();
+        $next_level = Auth::user()->userLevel->level->level_no + 1;
+        $next_level_amt = $p2p->amountToPay($next_level);
+        $upline = $p2p->getUpline(Auth::user()->id, 1, $next_level);
+        $next_user_level = Level::where('level_no', $next_level)->first();
+        // dd($upline);
+        return view('donation.create', compact('upline', 'next_level', 'next_level_amt', 'next_user_level'));
     }
 
     /**

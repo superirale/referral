@@ -14,7 +14,7 @@ class Assign{
 
       public function getSuperAdmin()
       {
-         return User::find(1);
+         return User::with('bankAccount', 'userLevel')->find(1);
       }
 
       public function isSuperAdmin($upline_user)
@@ -38,7 +38,7 @@ class Assign{
                                     ->where('stage', $stage)
                                     ->first();
          if($upline_id)
-            $upline = User::find($upline_id->user_id);
+            $upline = User::with('bankAccount', 'userLevel')->find($upline_id->user_id);
 
           if(isset($upline->id)){
             if($step > 1 && $step == 2){
@@ -46,7 +46,7 @@ class Assign{
                                           ->where('stage', $stage)
                                           ->first();
 
-               $upline = User::find($sec_upl_id->user_id);
+               $upline = User::with('bankAccount', 'userLevel')->find($sec_upl_id->user_id);
             }
 
             if($step > 1 && $step == 3){
@@ -54,7 +54,7 @@ class Assign{
                                           ->where('stage', $stage)
                                           ->first();
 
-               $upline = User::find($third_upl_id->user_id);
+               $upline = User::with('bankAccount', 'userLevel')->find($third_upl_id->user_id);
             }
           }
 
