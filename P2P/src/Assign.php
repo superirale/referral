@@ -2,6 +2,7 @@
 namespace P2P;
 use App\User;
 use App\UserDownline;
+use DB;
 
 class Assign{
 
@@ -83,5 +84,33 @@ class Assign{
                break;
          }
       }
+
+   public function getDownlineTree($user_id)
+   {
+
+      $downlines = $this->getDownlines($user_id);
+
+      foreach ($downlines as $key => $value) {
+
+         $children = $this->getDownlines($downlines[$key]->id);
+
+         $downlines[$key]->children = $children;
+
+         foreach ($children as $keyx => $value1) {
+            $grand_children = $this->getDownlines($downlines[$keyx]->id);
+
+            $downlines[$key]->children->children = $grand_children;
+         }
+
+      }
+      return $downlines;
+   }
+
+   public function getDownlines($user_id)
+   {
+      return DB::select("select u.id, u.name from user_downlines ud
+                        left join users u ON u.id = ud.downline_user_id
+                        where ud.user_id=?", [$user_id]);
+   }
 
 }

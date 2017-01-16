@@ -44,9 +44,6 @@ class AssignDownline
             $user = $user[0];
         }
 
-        // if(!isset()){
-        //     $user = DB::select("");
-        // }
 
         //give new user a topline
         UserDownline::create([

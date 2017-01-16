@@ -27,3 +27,4 @@ Route::resource('donation', 'DonationController');
 Route::get('received-donation', 'DonationController@recieved');
 Route::get('sent-donation', 'DonationController@sent');
 Route::get('upgrade', 'DonationController@create');
+Route::get('downlines', 'DownlinesController@index');

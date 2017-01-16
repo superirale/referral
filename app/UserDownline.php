@@ -15,4 +15,9 @@ class UserDownline extends Model
     	return $this->hasMany('App\User');
     }
 
+   public function downline_user()
+   {
+   		return $this->hasOne('App\User', 'id', 'downline_user_id');
+   }
+
 }

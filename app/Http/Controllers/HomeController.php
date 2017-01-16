@@ -27,13 +27,16 @@ class HomeController extends Controller
     public function index()
     {
         $p2p = new Assign();
+
         $total_received = Donation::where('payee_user_id', Auth::user()->id)
                                         ->where('status', 'approved')
                                         ->sum('amount');
         $total_donated = Donation::where('payer_user_id', Auth::user()->id)
                                         ->where('status', 'approved')
                                         ->sum('amount');
-        $next_level = Auth::user()->userLevel->level->level_no + 1;
+
+        $next_level = isset(Auth::user()->userLevel->level)? intval(Auth::user()->userLevel->level->level_no) + 1: 1;
+
         $next_level_amt = $p2p->amountToPay($next_level);
         $upline = $p2p->getUpline(Auth::user()->id, 1, $next_level);
 
