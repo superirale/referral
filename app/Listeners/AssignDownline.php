@@ -27,9 +27,9 @@ class AssignDownline
         $user = User::select("users.id")
                     ->leftjoin('user_downlines', 'users.id', "=", 'user_downlines.user_id')
                     ->whereNull('user_downlines.user_id')
-                    ->where('users.status', 'verified')
+                    // ->where('users.status', 'verified')
                     ->where('users.id', "!=", $event->data->id)
-                    ->orderBy('users.created_at', 'desc')
+                    ->orderBy('users.created_at', 'asc')
                     ->first();
 
         if(!isset($user->id)){
@@ -43,6 +43,10 @@ class AssignDownline
                                 LIMIT 1");
             $user = $user[0];
         }
+
+        // if(!isset()){
+        //     $user = DB::select("");
+        // }
 
         //give new user a topline
         UserDownline::create([

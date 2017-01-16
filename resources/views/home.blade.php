@@ -26,7 +26,7 @@
                       <b>Total amount earned</b> <a class="pull-right">&#8358;{{number_format($total_received)}}</a>
                     </li>
                     <li class="list-group-item">
-                      <b>Total donation</b> <a class="pull-right">&#8358;{{number_format($total_donated)}}</a>
+                      <b>Total donated</b> <a class="pull-right">&#8358;{{number_format($total_donated)}}</a>
                     </li>
                   </ul>
                   <a href="upgrade" class="btn btn-success btn-block"><b>Upgrade</b></a>
@@ -57,10 +57,11 @@
                   <p>My Downline</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
+                  {{-- <i class="ion ion-pie-graph"></i> --}}
+                  <i class="fa fa-users"></i>
                 </div>
                 <a href="#" class="small-box-footer">
-                  Downline Chart <i class="fa fa-pie-chart"></i>
+                  Downline Chart <i class="fa fa-users"></i>
                 </a>
               </div>
         </div>

@@ -23,7 +23,7 @@ class Assign{
 
          if(isset($upline_user->id)){
 
-            if($super_admin->id == $upline_user->id){
+            if($super_admin->id == $upline_user->id || $upline_user->status != "verified"){
 
                return $super_admin;
             }
@@ -35,16 +35,17 @@ class Assign{
       public function getUpline($user_id, $stage = 1, $step = 1)
       {
         $upline_id = UserDownline::where('downline_user_id', $user_id)
-                                    ->where('stage', $stage)
-                                    ->first();
+                                 ->where('stage', $stage)
+                                 ->first();
          if($upline_id)
             $upline = User::with('bankAccount', 'userLevel')->find($upline_id->user_id);
 
           if(isset($upline->id)){
+
             if($step > 1 && $step == 2){
                   $sec_upl_id = UserDownline::where('downline_user_id', $upline->id)
-                                          ->where('stage', $stage)
-                                          ->first();
+                                             ->where('stage', $stage)
+                                             ->first();
 
                $upline = User::with('bankAccount', 'userLevel')->find($sec_upl_id->user_id);
             }
@@ -82,4 +83,5 @@ class Assign{
                break;
          }
       }
+
 }
