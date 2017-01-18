@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="/admin/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="/admin/css/jquery.orgchart.css">
+    <link rel="stylesheet" href="/admin/css/jquery.countdownTimer.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -200,42 +201,43 @@
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 2.1.4 -->
-    {{-- <script src="/admin/plugins/jQuery/jQuery-2.1.4.min.js"></script> --}}
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="/admin/js/jQuery-3.1.0.min.js"></script>
+  {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script> --}}
 
     <!-- Bootstrap 3.3.5 -->
     <script src="/admin/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/admin/plugins/moment/moment-with-locales.min.js"></script>
+  {{--   <script src="/admin/plugins/moment/moment-with-locales.min.js"></script>
     <script src="/admin/plugins/moment/countdown.min.js"></script>
-    <script src="/admin/plugins/moment/moment-countdown.min.js"></script>
+    <script src="/admin/plugins/moment/moment-countdown.min.js"></script> --}}
     <script src="/admin/js/jquery.orgchart.js"></script>
+    <script src="/admin/js/jquery.countdownTimer.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="/admin/js/app.min.js"></script>
-    @if(Auth::user()->status == "unverified")
-    <script>
-      $(document).ready(function(){
-        setInterval(function() {
 
-          var randomnumber = Math.floor(Math.random() * 100);
-          $('#count-down').text(moment("{{date('Y-m-d H:i:s', strtotime(Auth::user()->created_at))}}").countdown().toString());
-        }, 1000);
 
+@if(Auth::user()->status == "unverified")
+ <script>
+       $(function(){
+        $('#countdown').countdowntimer({
+          startDate:"<?php echo date("Y/m/d H:i:s");?>",
+          dateAndTime:"<?php echo date("Y/m/d H:i:s", strtotime(Auth::user()->created_at ."+24 hours"));?>",
+          size : "lg"
+        });
       });
-    </script>
+</script>
+@endif
 
-    @endif
-      <script>
-    @if(isset($downline_page))
+<script>
+@if(isset($downline_page))
       'use strict';
-
 (function($){
 
   $(function() {
-
     $('#chart-container').orgchart({
       'data' : <?php echo json_encode($downlines); ?>,
-      'depth': 2,
-      'nodeContent': 'name'
+      'pan': true,
+      'zoom': true
     });
 
   });

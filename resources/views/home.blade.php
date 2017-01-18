@@ -7,9 +7,19 @@
             <h4><i class="icon fa fa-ban"></i> Alert!</h4>
            <b> Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</b>
             <br>
-            <h1 id="count-down"></h1>
+            <table style="border:0px;">
+                <tr>
+                    <td style="width:60px;text-align:center;">Days</td>
+                    <td style="width:70px;text-align:center;">Hours</td>
+                    <td style="width:60px;text-align:center;">Minutes</td>
+                    <td style="width:70px;text-align:center;">Seconds</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><span id="countdown"></span></td>
+                </tr>
+            </table>
         </div>
-    @endif
+@endif
 
     <div class="row">
         <div class="col-md-4">
@@ -20,7 +30,7 @@
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Level</b> <b class="pull-right">{{Auth::user()->userLevel->level->name}}</b>
+                      <b>Level</b> <b class="pull-right">@if(isset(Auth::user()->userLevel)){{Auth::user()->userLevel->level->name}}@endif</b>
                     </li>
                     <li class="list-group-item">
                       <b>Total amount earned</b> <a class="pull-right">&#8358;{{number_format($total_received)}}</a>

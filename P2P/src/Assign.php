@@ -41,22 +41,32 @@ class Assign{
          if($upline_id)
             $upline = User::with('bankAccount', 'userLevel')->find($upline_id->user_id);
 
-          if(isset($upline->id)){
+         if(isset($upline->id)){
 
             if($step > 1 && $step == 2){
+                  if(isset($upline_id->id)) {
                   $sec_upl_id = UserDownline::where('downline_user_id', $upline->id)
                                              ->where('stage', $stage)
                                              ->first();
-
-               $upline = User::with('bankAccount', 'userLevel')->find($sec_upl_id->user_id);
             }
 
+            if(isset($sec_upl_id) && !is_null($sec_upl_id) )
+               $upline = User::with('bankAccount', 'userLevel')->find($sec_upl_id->user_id);
+            else
+               $upline = $this->getSuperAdmin();
+         }
+
             if($step > 1 && $step == 3){
-                  $third_upl_id = UserDownline::where('downline_user_id', $sec_upl_id->id)
+                  if(isset($sec_upl_id->id)) {
+                     $third_upl_id = UserDownline::where('downline_user_id', $sec_upl_id->id)
                                           ->where('stage', $stage)
                                           ->first();
+                  }
 
-               $upline = User::with('bankAccount', 'userLevel')->find($third_upl_id->user_id);
+               if(isset($third_upl_id) && !is_null($third_upl_id) )
+                  $upline = User::with('bankAccount', 'userLevel')->find($third_upl_id->user_id);
+               else
+                  $upline = $this->getSuperAdmin();
             }
           }
 
@@ -96,13 +106,20 @@ class Assign{
 
          $downlines[$key]->children = $children;
 
-         foreach ($children as $keyx => $value1) {
-            $grand_children = $this->getDownlines($downlines[$keyx]->id);
+         foreach ($downlines[$key]->children as $keyx => $value1) {
 
-            $downlines[$key]->children->children = $grand_children;
+            $grand_children = $this->getDownlines($downlines[$key]->children[$keyx]->id);
+
+            $downlines[$key]->children[$keyx]->children = $grand_children;
+
+            // foreach ($downlines[$key]->children[$keyx]->children as $keyy => $value2) {
+            //    $great_grand_children = $this->getDownlines($downlines[$key]->children[$keyx]->children[$keyy]->id);
+            //    $downlines[$key]->children[$keyx]->children[$keyy]->children = $great_grand_children;
+            // }
          }
 
       }
+
       return $downlines;
    }
 

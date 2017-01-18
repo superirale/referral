@@ -1,23 +1,16 @@
 @extends('layouts.dashboard')
 @section('content')
-<ul id="ul-data">
-  <li>Lao Lao
-    <ul>
-      <li>Bo Miao</li>
-      <li>Su Miao
-        <ul>
-          <li>Tie Hua</li>
-          <li>Hei Hei
-            <ul>
-              <li>Pang Pang</li>
-              <li>Xiang Xiang</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-<div id="chart-container"></div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Your Downline</div>
+                    <div class="panel-body">
+                      <div id="chart-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

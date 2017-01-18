@@ -14,6 +14,7 @@ use App\Level;
 use App\BankAccount;
 use App\Helpers\Uploader;
 use P2P\Assign;
+use App\UserLevel;
 
 class DonationController extends Controller
 {
@@ -161,22 +162,22 @@ class DonationController extends Controller
         return redirect('donation');
     }
 
-    public function recieved()
+    public function recieved($search = null)
     {
         $received_donations = Donation::with(['level', 'sender'=> function ($q)
         {
-            $q->with(['bankAccount']);
+            $q->with(['bankAccount', 'profile']);
         }])->where('payee_user_id', Auth::user()->id)->get();
 
         $current_user = User::with(['bankAccount' => function ($q)
         {
             $q->with('bank');
         }])->find(Auth::user()->id);
-
+        // dd($received_donations);
         return view('donation.receive', compact('received_donations', 'current_user'));
     }
 
-    public function sent()
+    public function sent($search = null)
     {
         $sent_donations = Donation::with(['level', 'sender', 'receiver'=> function ($q)
         {
@@ -198,7 +199,16 @@ class DonationController extends Controller
     public function accept($donation_id)
     {
         $donation = Donation::find($donation_id);
-        $donation->update('status', 'approved');
+
+        $donation->update(['status' => 'approved']);
+
+        $upgraded_user_level = UserLevel::where('user_id', $donation->payer_user_id)->first();
+
+        $user = User::find($donation->payer_user_id);
+
+        $user->update(['status' => 'verified']);
+
+        $upgraded_user_level->update(['level_id' => $donation->user_level_id]);
 
         Session::flash('flash_message', 'Donation approved!');
 
@@ -208,7 +218,7 @@ class DonationController extends Controller
     public function reject($donation_id)
     {
         $donation = Donation::find($donation_id);
-        $donation->update('status', 'rejected');
+        $donation->update(['status' =>'rejected']);
 
         Session::flash('flash_message', 'Donation rejected!');
 

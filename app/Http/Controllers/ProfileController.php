@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Profile;
 use App\User;
+use App\City;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
@@ -25,8 +26,9 @@ class ProfileController extends Controller
     public function index()
     {
         $profile = Profile::paginate(25);
+        $cities = City::all();
 
-        return view('profile.index', compact('profile'));
+        return view('profile.index', compact('profile', 'cities'));
     }
 
     /**
@@ -36,7 +38,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return view('profile.create');
+        $cities = City::pluck('id', 'name');
+
+        return view('profile.create', compact('cities'));
     }
 
     /**
@@ -69,8 +73,9 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile = Profile::findOrFail($id);
+        $cities = City::pluck('id', 'name');
 
-        return view('profile.show', compact('profile'));
+        return view('profile.show', compact('profile', 'cities'));
     }
 
     /**
@@ -84,10 +89,12 @@ class ProfileController extends Controller
     {
         $profile = Profile::where('user_id', $user_id)->first();
 
-        if(!$profile)
-            return view('profile.create');
+        $cities = City::pluck('name', 'id');
 
-        return view('profile.edit', compact('profile'));
+        if(!$profile)
+            return view('profile.create', compact('cities', 'profile'));
+
+        return view('profile.edit', compact('profile', 'cities'));
     }
 
     /**

@@ -25,7 +25,7 @@ class Donation extends Model
      *
      * @var array
      */
-    protected $fillable = ['donated_to', 'amount', 'payee_user_id', 'payment_details', 'payment_receipt', 'payer_user_id', 'user_level_id'];
+    protected $fillable = ['donated_to', 'amount', 'payee_user_id', 'payment_details', 'payment_receipt', 'payer_user_id', 'user_level_id', 'status'];
 
     public function sender()
     {
@@ -39,6 +39,6 @@ class Donation extends Model
 
     public function level()
     {
-        return $this->belongsTo('App\Level');
+        return $this->belongsTo('App\Level', 'user_level_id');
     }
 }

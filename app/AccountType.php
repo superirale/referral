@@ -11,7 +11,7 @@ class AccountType extends Model
      *
      * @var string
      */
-    protected $table = 'AccountType';
+    protected $table = 'account_types';
 
     /**
     * The database primary key value.
@@ -27,5 +27,5 @@ class AccountType extends Model
      */
     protected $fillable = ['name'];
 
-    
+
 }

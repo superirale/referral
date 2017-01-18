@@ -24,16 +24,7 @@ class AssignDownline
 
     public function onRegistered($event)
     {
-        $user = User::select("users.id")
-                    ->leftjoin('user_downlines', 'users.id', "=", 'user_downlines.user_id')
-                    ->whereNull('user_downlines.user_id')
-                    // ->where('users.status', 'verified')
-                    ->where('users.id', "!=", $event->data->id)
-                    ->orderBy('users.created_at', 'asc')
-                    ->first();
-
-        if(!isset($user->id)){
-            $user = DB::select("select u.*, count(u.id) as countx from users u
+       $user = DB::select("select u.*, count(u.id) as countx from users u
                                 inner join user_downlines ud ON u.id = ud.user_id
                                 where ud.user_id is not null
                                 and ud.stage = 1
@@ -41,7 +32,18 @@ class AssignDownline
                                 having countx < 5
                                 order by count(ud.id), u.created_at asc
                                 LIMIT 1");
-            $user = $user[0];
+            if(isset($user[0]))
+                $user = $user[0];
+
+        if(!isset($user->id)){
+
+
+             $user = User::select("users.id")
+                    ->leftjoin('user_downlines', 'users.id', "=", 'user_downlines.user_id')
+                    ->whereNull('user_downlines.user_id')
+                    ->where('users.id', "!=", $event->data->id)
+                    ->orderBy('users.created_at', 'asc')
+                    ->first();
         }
 
 

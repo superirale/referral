@@ -10,7 +10,7 @@
                     <div class="input-group" style="width: 150px;">
                       <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
                       <div class="input-group-btn">
-                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i>Search</button>
                       </div>
                     </div>
                   </div>
@@ -26,12 +26,18 @@
                     </tr>
                     @if(isset($received_donations))
                       @foreach($received_donations as $donation)
-
                         <tr>
                           <td>{{$donation->level->name}}</td>
                           <td>
+                          @if($donation->status == "approved")
+                            <span class="label label-success">approved</span>
+
+                          @elseif($donation->status == "rejected")
+                            <span class="label label-danger">rejected</span>
+                          @else
                             <a href="/donation/approve/{{$donation->id}}" class="label label-success" onclick="confirm('are you sure you want to confirm this donation?');">approve</a>
                             <a href="/donation/reject/{{$donation->id}}" class="label label-danger">reject</a>
+                            @endif
                           </td>
                           <td>
                             <p>{{$donation->sender->name}}</p>

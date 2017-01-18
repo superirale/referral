@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Bank;
 use App\BankDetail;
+use App\AccountType;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
@@ -24,8 +26,9 @@ class BankDetailController extends Controller
     public function index()
     {
         $bankdetail = BankDetail::paginate(25);
+        $banks = Bank::pluck('name', 'id');
 
-        return view('bank-detail.index', compact('bankdetail'));
+        return view('bank-detail.index', compact('bankdetail', 'banks'));
     }
 
     /**
@@ -83,11 +86,13 @@ class BankDetailController extends Controller
     public function edit($id)
     {
         $bankdetail = BankDetail::where('user_id', $id)->first();
+        $banks = Bank::pluck('name', 'id');
+        $account_types = AccountType::pluck('name', 'id');
 
         if(!$bankdetail)
-            return view('bank-detail.create');
+            return view('bank-detail.create', compact('bankdetail', 'banks', 'account_types'));
 
-        return view('bank-detail.edit', compact('bankdetail'));
+        return view('bank-detail.edit', compact('bankdetail', 'banks', 'account_types'));
     }
 
     /**

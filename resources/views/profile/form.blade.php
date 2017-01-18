@@ -4,13 +4,16 @@
         {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
         {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('city_id') ? 'has-error' : ''}}">
-    {!! Form::label('city_id', 'City Id', ['class' => 'col-md-4 control-label']) !!}
+</div>
+
+<div class="form-group {{ $errors->has('type') ? 'has-error' : ''}}">
+    {!! Form::label('City', 'City', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('city_id', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('city_id', '<p class="help-block">:message</p>') !!}
+        {!! Form::select('city_id', $cities, null, ['class' => 'form-control', 'required' => 'required']) !!}
+        {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('gender') ? 'has-error' : ''}}">
+</div>
+<div class="form-group {{ $errors->has('gender') ? 'has-error' : ''}}">
     {!! Form::label('gender', 'Gender', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::text('gender', null, ['class' => 'form-control']) !!}
