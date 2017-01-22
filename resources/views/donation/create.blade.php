@@ -20,13 +20,13 @@
 
                       <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                          <b>Bank Name</b> <b class="pull-right">{{$upline->bankAccount->bank->name}}</b>
+                          <b>Bank Name</b> <b class="pull-right">@if(isset($upline->bankAccount)){{$upline->bankAccount->bank->name}}@else NA @endif</b>
                         </li>
                         <li class="list-group-item">
-                          <b>Bank Account Name </b> <b class="pull-right">{{$upline->bankAccount->account_name}}</b>
+                          <b>Bank Account Name </b> <b class="pull-right">@if(isset($upline->bankAccount)){{$upline->bankAccount->account_name}}@else NA @endif</b>
                         </li>
                         <li class="list-group-item">
-                          <b>Bank Account Number</b> <b class="pull-right">{{$upline->bankAccount->account_number}}</b>
+                          <b>Bank Account Number</b> <b class="pull-right">@if(isset($upline->bankAccount)){{$upline->bankAccount->account_number}}@else NA @endif</b>
                         </li>
                         <li class="list-group-item">
                           <b>Amount</b> <b class="pull-right">&#8358;{{number_format($next_level_amt)}}</b>

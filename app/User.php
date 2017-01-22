@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\UserDownline');
     }
+
+    public function upline()
+    {
+        return $this->hasOne('App\UserDownline', 'downline_user_id');
+    }
 }

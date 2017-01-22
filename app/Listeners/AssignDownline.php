@@ -37,7 +37,6 @@ class AssignDownline
 
         if(!isset($user->id)){
 
-
              $user = User::select("users.id")
                     ->leftjoin('user_downlines', 'users.id', "=", 'user_downlines.user_id')
                     ->whereNull('user_downlines.user_id')

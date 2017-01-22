@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index');
+Route::get('/test', 'TestController@index');
 
 Route::resource('profile', 'ProfileController');
 Route::resource('bank-detail', 'BankDetailController');
